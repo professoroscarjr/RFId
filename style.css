@@ -1,0 +1,145 @@
+p {
+    font-size: 1.1em;
+    margin-bottom: 30px;
+}
+
+
+/* Estilos Dinâmicos para a Mensagem */
+
+#rfid-message-display {
+    font-size: 2em;
+    font-weight: bold;
+    min-height: 1.5em;
+    display: block;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.status-allowed {
+    color: #28a745;
+    /* Verde */
+    background-color: #e9f7ef;
+    border: 2px solid #28a745;
+}
+
+.status-denied {
+    color: #dc3545;
+    /* Vermelho */
+    background-color: #f8d7da;
+    border: 2px solid #dc3545;
+}
+
+.status-restrito {
+    color: #ffc107;
+    /* Amarelo */
+    background-color: #fff3cd;
+    border: 2px solid #ffc107;
+}
+
+.initial-state {
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border: 2px solid #6c757d;
+}
+
+#status {
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.ws-connected {
+    color: #28a745;
+}
+
+.ws-disconnected {
+    color: #dc3545;
+}
+
+#rfid-uid-display {
+    margin-top: 10px;
+    font-size: 0.8em;
+    color: #999;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+.container {
+    background-color: #fff;
+    padding: 40px 60px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+#user-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    /* Foto redonda */
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 4px solid transparent;
+    opacity: 0;
+    /* Começa invisível */
+    transition: all 0.3s ease-in-out;
+}
+
+
+/* Classes de estado (mantidas do projeto anterior) */
+
+#rfid-message-display {
+    font-size: 2em;
+    font-weight: bold;
+    min-height: 1.5em;
+    display: block;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.status-allowed {
+    color: #28a745;
+    background-color: #e9f7ef;
+    border-color: #28a745;
+}
+
+.status-denied {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border-color: #dc3545;
+}
+
+.photo-allowed {
+    border-color: #28a745 !important;
+    opacity: 1 !important;
+}
+
+.photo-denied {
+    border-color: #dc3545 !important;
+    opacity: 1 !important;
+}
+
+.initial-state {
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border: 2px solid #6c757d;
+}

@@ -1,0 +1,68 @@
+# ===============================================
+# Configuração Geral de Sistemas e Editores
+# ===============================================
+
+# MacOS
+.DS_Store
+
+# Diretório de configurações do VS Code
+.vscode/
+
+# ===============================================
+# Variáveis de Ambiente e Arquivos de Configuração Secreta
+# ===============================================
+
+# Ignora TODOS os arquivos .env, .env.local, etc. em qualquer lugar do projeto.
+# Isso é crucial para credenciais do MySQL e chaves de API.
+**/.env
+**/.env.*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Se houver um arquivo .env específico na pasta "RFID" (do exemplo anterior)
+# Mas idealmente, o .env deve ser ignorado pela regra acima.
+#/RFID/.env
+
+# ===============================================
+# 1. Pastas e Módulos Gerados (Node/JS)
+# ===============================================
+
+# Ignora todas as pastas node_modules e build/dist
+node_modules/
+build/
+dist/
+
+# ===============================================
+# 2. Frontend (React/Create React App - face-recognition-frontend)
+# ===============================================
+
+# Se você usou o craco, pode ser útil ignorar arquivos de cache/logs dele
+.cracorc
+.cache
+
+# Pastas de resultados de testes
+coverage/
+/face-recognition-frontend/coverage
+
+# Arquivos de log do npm/yarn/pnpm
+npm-debug.log*
+yarn-error.log
+.pnpm-debug.log*
+
+# ===============================================
+# 3. Modelos de IA (Opcional, mas recomendado)
+# ===============================================
+
+# Os modelos do face-api.js são grandes e geralmente são baixados separadamente.
+# É bom ignorá-los para manter o repositório leve.
+/face-recognition-frontend/public/models
+
+# ===============================================
+# 4. Backend (Node.js/Express - face-recognition-backend)
+# ===============================================
+
+# Se houver logs ou arquivos temporários específicos do backend:
+/face-recognition-backend/logs/
+/face-recognition-backend/tmp/

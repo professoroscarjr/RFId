@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitor RFID com Foto</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Sistema de Identificação RFID</h1>
+        <p>Aproxime um cartão para verificar o acesso:</p>
+
+        <img id="user-photo" src="" alt="Foto do Usuário">
+
+        <div id="rfid-message-display" class="initial-state">Aguardando leitura...</div>
+        <div id="rfid-uid-display">UID: N/A</div>
+
+        <div id="status">Conectando ao servidor...</div>
+    </div>
+
+    <script>
+        const messageDisplay = document.getElementById('rfid-message-display');
+        const uidDisplay = document.getElementById('rfid-uid-display');
+        const statusDisplay = document.getElementById('status');
+        const photoDisplay = document.getElementById('user-photo'); // NOVO ELEMENTO
+        const wsUrl = `ws://localhost:8080`;
+        let websocket;
+
+        function updateDisplay(data) {
+            // Limpa classes de estado e da foto
+            messageDisplay.classList.remove('status-allowed', 'status-denied', 'status-restrito', 'initial-state');
+            photoDisplay.classList.remove('photo-allowed', 'photo-denied');
+            photoDisplay.style.opacity = 0; // Esconde a foto antes de atualizar a URL
+
+            // 1. Atualiza a foto
+            if (data.photoUrl) {
+                photoDisplay.src = data.photoUrl; // Define a URL da foto
+
+                // 2. Atualiza a mensagem e define o estilo
+                if (data.status === 'allowed') {
+                    messageDisplay.textContent = data.message;
+                    messageDisplay.classList.add('status-allowed');
+                    photoDisplay.classList.add('photo-allowed');
+                } else {
+                    messageDisplay.textContent = data.message;
+                    messageDisplay.classList.add('status-denied');
+                    photoDisplay.classList.add('photo-denied');
+                }
+
+                // Exibe a foto
+                photoDisplay.style.opacity = 1;
+
+                // 3. Define um temporizador para limpar a tela após 5 segundos
+                setTimeout(resetDisplay, 5000);
+            }
+
+            uidDisplay.textContent = 'UID Lido: ' + data.uid;
+        }
+
+        function resetDisplay() {
+            messageDisplay.classList.remove('status-allowed', 'status-denied', 'status-restrito');
+            messageDisplay.classList.add('initial-state');
+            messageDisplay.textContent = 'Aproxime um cartão...';
+
+            photoDisplay.classList.remove('photo-allowed', 'photo-denied');
+            photoDisplay.style.opacity = 0; // Esconde a foto
+            photoDisplay.src = ""; // Limpa a URL
+
+            uidDisplay.textContent = 'UID: N/A';
+        }
+
+
+        function connectWebSocket() {
+            websocket = new WebSocket(wsUrl);
+
+            websocket.onopen = () => {
+                console.log('Conectado ao servidor WebSocket!');
+                statusDisplay.textContent = 'Status: Conectado ao servidor.';
+                statusDisplay.className = 'ws-connected';
+                resetDisplay();
+            };
+
+            websocket.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    updateDisplay(data);
+                } catch (e) {
+                    console.error("Erro ao analisar JSON:", e);
+                    messageDisplay.textContent = "Erro na comunicação com o servidor.";
+                    messageDisplay.classList.add('status-denied');
+                }
+            };
+            // ... (onclose e onerror permanecem iguais)
+        }
+
+        connectWebSocket();
+    </script>
+</body>
+
+</html>
